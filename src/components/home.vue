@@ -1,4 +1,5 @@
 <template>
+ 
   <el-container>
   <el-header>
 <div class="logo"></div>
@@ -10,8 +11,9 @@
     <el-aside width="200px"><el-row class="tac">
   <el-col :span="24" >
     <el-menu
+      router
       collapse-transition
-      default-active="1-1"
+      default-active="users"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       unique-opened
@@ -24,7 +26,7 @@
           <i class="el-icon-location"></i>
           <span>用户管理</span>
         </template>
-          <el-menu-item index="1-1"><i class="el-icon-menu"></i>用户列表 </el-menu-item>
+          <el-menu-item index="users"><i class="el-icon-menu"></i>用户列表 </el-menu-item>
       </el-submenu>
          <el-submenu index="2">
         <template slot="title">
@@ -62,9 +64,11 @@
     </el-menu>
   </el-col>
 </el-row></el-aside>
-    <el-main>Main</el-main>
+    <el-main><router-view>Maindd</router-view></el-main>
   </el-container>
 </el-container>
+ 
+
 </template>
 
 <script>
@@ -76,7 +80,9 @@ export default {
   },
   methods: {
     exit() {
+      // 清除token
       localStorage.removeItem('token')
+      //跳转到登录页
       this.$router.push('/login')
     },
     handleOpen(key, keyPath) {
