@@ -50,15 +50,15 @@ export default {
         if (valid) {
           console.log('请求通过')
           //发送阿贾克斯请求
-          axios({
+          this.axios({
             url: 'http://localhost:8888/api/private/v1/login',
             method: 'post',
             data: this.form
           }).then(res => {
             console.log(res.data)
-            if (res.data.meta.status == 200) {
+            if (res.meta.status == 200) {
               this.$message.success('登录成功')
-              localStorage.setItem('token', res.data.data.token)
+              localStorage.setItem('token', res.data.token)
               this.$router.push('/home')
             } else {
               this.$message.error('登录失败')

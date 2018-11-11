@@ -7,6 +7,39 @@ import bus from './assets/bus.css'
 Vue.use(ElementUI) // 使用这个插件
 
 Vue.config.productionTip = false
+// 导入axios
+import axios from 'axios'
+Vue.prototype.axios = axios
+
+//在Vue的全局变量上配置baseurl地址
+axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
+
+//在请求拦截中配置请求头
+//config用来配置axios
+axios.interceptors.request.use(
+  function(config) {
+    config.headers.Authorization = localStorage.getItem('token')
+    return config
+  },
+  function(error) {
+    return Promise.reject(error)
+  }
+)
+//在响应拦截中配置data
+
+// 添加响应拦截器
+axios.interceptors.response.use(
+  function(res) {
+    // 对响应数据做点什么
+    // console.log('拦截到了响应', res)
+    // 直接返回res.data，对应的就是服务器返回的数据
+    return res.data
+  },
+  function(error) {
+    // 对响应错误做点什么
+    return Promise.reject(error)
+  }
+)
 
 /* eslint-disable no-new */
 new Vue({
