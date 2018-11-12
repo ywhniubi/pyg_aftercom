@@ -14,12 +14,11 @@
    :data="userlist"
     border
     style="width: 100%">
-    <el-table-column
-      
-      prop="username"
-      label="姓名"
-      width="180">
-    </el-table-column>
+  <el-table-column
+    prop="username"
+    label="姓名"
+    width="180">
+  </el-table-column>
     <el-table-column
       prop="email"
       label="邮箱"
@@ -45,7 +44,7 @@
         <el-table-column
       label="操作">
       <template slot-scope="scope">
-          <el-button type="primary" plain icon="el-icon-edit" ></el-button>
+          <el-button type="primary" plain icon="el-icon-edit"  @click="eidtuserlist(scope.row)"></el-button>
           <el-button type="danger" plain icon="el-icon-delete" @click="del(scope.row.id)"></el-button>
             <el-button type="success" plain icon="el-icon-check" >分配角色</el-button>
       </template>
@@ -86,10 +85,30 @@
     <el-button type="primary" @click="adduserlist">确 定</el-button>
   </div>
 </el-dialog>
+
+
+<el-dialog  :visible.sync="editFormVisible"  title="添加用户" class="el-headerss">
+  <el-form :rules="rules" status-icon ref="editForm" :model="editForm">
+    <el-form-item label="用户名" :label-width="formLabelWidth"  prop="username" >
+        <el-tag type="info">{{editForm.username}}</el-tag>
+    </el-form-item>
+      <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email"  >
+      <el-input  autocomplete="off" v-model="editForm.email"></el-input>
+    </el-form-item>
+      <el-form-item label="手机" :label-width="formLabelWidth" prop="mobile" >
+      <el-input autocomplete="off" v-model="editForm.mobile"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="edituserpage">确 定</el-button>
+  </div>
+</el-dialog>
+
+
+
 </div>
-  
 </template>
- 
 <script>
 import axios from 'axios'
 export default {
@@ -102,6 +121,7 @@ export default {
       total: 0,
       dialogVisible: false,
       dialogFormVisible: false,
+      editFormVisible: false,
       formLabelWidth: '120px',
       rules: {
         username: [
@@ -115,7 +135,6 @@ export default {
         email: [
           { type: 'email', message: '请输入正确格式的邮箱', trigger: 'blur' }
         ],
-
         mobile: [
           {
             pattern: /^1\d{10}$/,
@@ -159,7 +178,7 @@ export default {
     },
 
     handleCurrentChange(val) {
-      //页面发生改变时
+      // 页面发生改变时
       // val就是当前页
       // console.log(val)
       // 修改当前页
@@ -239,8 +258,8 @@ export default {
         }).then(res => {
           console.log(res)
           let { meta: { status } } = res
-          if (status == 201) {
-            //重新渲染最后一页
+          if (status === 201) {
+            // 重新渲染最后一页
             this.total++
             this.currentpage = Math.ceil(this.total / this.pagesize)
 
@@ -255,15 +274,42 @@ export default {
           }
         })
       })
+    },
+    eidtuserlist(user) {
+      console.log(user)
+
+      this.editFormVisible = true
+      this.editForm.username = user.username
+      this.editForm.email = user.email
+      this.editForm.mobile = user.mobile
+      this.editForm.id = user.id
+    },
+    edituserpage() {
+      this.axios({
+        method: 'put',
+        url: `users/${this.editForm.id}`,
+        data: this.editForm
+      }).then(res => {
+        console.log(res)
+        this.getList()
+        // 重置
+        this.$refs.editForm.resetFields()
+        this.editFormVisible = false
+      })
     }
   },
+
   created() {
     this.getList()
   }
 }
 </script>
 
-<style>
+<style  scoped>
+.el-tag {
+  width: 100%;
+  text-align: left;
+}
 .el-table__header {
   line-height: 30px;
 }
@@ -284,5 +330,16 @@ export default {
 }
 .el-headerss {
   line-height: 0px;
+}
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+}
+.el-form {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
 }
 </style>

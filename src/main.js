@@ -4,18 +4,19 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import bus from './assets/bus.css'
+import axios from 'axios'
 Vue.use(ElementUI) // 使用这个插件
 
 Vue.config.productionTip = false
 // 导入axios
-import axios from 'axios'
+
 Vue.prototype.axios = axios
 
-//在Vue的全局变量上配置baseurl地址
+// 在Vue的全局变量上配置baseurl地址
 axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
 
-//在请求拦截中配置请求头
-//config用来配置axios
+// 在请求拦截中配置请求头
+// config用来配置axios
 axios.interceptors.request.use(
   function(config) {
     config.headers.Authorization = localStorage.getItem('token')
@@ -25,7 +26,7 @@ axios.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-//在响应拦截中配置data
+// 在响应拦截中配置data
 
 // 添加响应拦截器
 axios.interceptors.response.use(
@@ -45,6 +46,5 @@ axios.interceptors.response.use(
 new Vue({
   el: '#app',
   router,
-
   render: h => h(App)
 })

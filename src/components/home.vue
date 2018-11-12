@@ -1,5 +1,4 @@
 <template>
- 
   <el-container>
   <el-header>
 <div class="logo"></div>
@@ -66,11 +65,7 @@
 </el-row></el-aside>
     <el-main><router-view>Maindd</router-view></el-main>
   </el-container>
-</el-container>
- 
-
-</template>
-
+</el-container></template>
 <script>
 export default {
   data() {
@@ -82,7 +77,7 @@ export default {
     exit() {
       // 清除token
       localStorage.removeItem('token')
-      //跳转到登录页
+      // 跳转到登录页
       this.$router.push('/login')
     },
     handleOpen(key, keyPath) {
@@ -95,7 +90,7 @@ export default {
 }
 </script>
 
-<style>
+<style >
 .logo {
   height: 60px;
   width: 300px;
@@ -145,7 +140,7 @@ section {
   background-color: #e9eef3;
   color: #333;
   text-align: center;
-  line-height: 160px;
+  line-height: 80px;
 }
 
 body > .el-container {

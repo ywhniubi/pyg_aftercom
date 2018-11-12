@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data() {
     return {
@@ -49,14 +48,14 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           console.log('请求通过')
-          //发送阿贾克斯请求
+          // 发送阿贾克斯请求
           this.axios({
             url: 'http://localhost:8888/api/private/v1/login',
             method: 'post',
             data: this.form
           }).then(res => {
             console.log(res.data)
-            if (res.meta.status == 200) {
+            if (res.meta.status === 200) {
               this.$message.success('登录成功')
               localStorage.setItem('token', res.data.token)
               this.$router.push('/home')
