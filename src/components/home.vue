@@ -32,8 +32,8 @@
           <i class="el-icon-location"></i>
           <span>权限管理</span>
         </template>
-            <el-menu-item index="2-1"><i class="el-icon-menu"></i>角色列表</el-menu-item>
-           <el-menu-item index="2-2"><i class="el-icon-menu"></i>权限列表</el-menu-item>
+            <el-menu-item index="role"><i class="el-icon-menu"></i>角色列表</el-menu-item>
+           <el-menu-item index="power"><i class="el-icon-menu"></i>权限列表</el-menu-item>
       </el-submenu>
           <el-submenu index="3">
         <template slot="title">
@@ -139,8 +139,6 @@ section {
 .el-main {
   background-color: #e9eef3;
   color: #333;
-  text-align: center;
-  line-height: 80px;
 }
 
 body > .el-container {

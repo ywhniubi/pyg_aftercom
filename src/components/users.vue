@@ -85,8 +85,6 @@
     <el-button type="primary" @click="adduserlist">确 定</el-button>
   </div>
 </el-dialog>
-
-
 <el-dialog  :visible.sync="editFormVisible"  title="添加用户" class="el-headerss">
   <el-form :rules="rules" status-icon ref="editForm" :model="editForm">
     <el-form-item label="用户名" :label-width="formLabelWidth"  prop="username" >
@@ -104,9 +102,6 @@
     <el-button type="primary" @click="edituserpage">确 定</el-button>
   </div>
 </el-dialog>
-
-
-
 </div>
 </template>
 <script>
